@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0E1A30">
+<title>K2FM 음성경고장치 | 위험구역 7m 자동 음성경고 시스템</title>
+<meta name="description" content="㈜케이투에프엠 모션감지 음성경고장치 — 작업자가 위험구역 7m 이내 접근 시 자동으로 위험을 방송합니다. 직접생산확인증명서 보유. 모델 BSWD92-14-SN.">
+<meta property="og:title" content="K2FM 음성경고장치 — 안전이 가장 우선이어야 합니다">
+<meta property="og:description" content="위험구역 7m 자동 음성경고. 멘트 자유 변경, 간편 설치. ㈜케이투에프엠 직접 제조.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" as="style" crossorigin
+  href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  :root {
+    /* ── Trust-Tech B2B 팔레트 ── */
+    --navy-900: #0E1A30;
+    --navy-800: #14233F;
+    --navy-700: #1B2A4A;
+    --ink:      #0B1320;
+    --slate:    #4A586E;
+    --paper:    #FFFFFF;
+    --mist:     #F4F7FB;
+    --line:     #DCE4EE;
+    --cyan:     #2EA8E0;
+    --cyan-br:  #5CC6F2;
+    --alert:    #FF7A1A;   /* 위험·경고 — 의미 색, 장식 금지 */
+    --safe:     #28C08A;   /* 안전 확보 — 의미 색 */
+
+    --font: "Pretendard", "Pretendard Variable", -apple-system, BlinkMacSystemFont,
+            "Segoe UI", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+    --mono: "SFMono-Regular", ui-monospace, "Cascadia Mono", Consolas, monospace;
+
+    --text-hero: clamp(2.3rem, 1.4rem + 4.2vw, 5rem);
+    --text-h2:   clamp(1.7rem, 1.2rem + 1.9vw, 2.9rem);
+    --text-lead: clamp(1.05rem, 0.98rem + 0.45vw, 1.3rem);
+
+    --space-sec: clamp(4.5rem, 3rem + 6vw, 9rem);
+    --maxw: 1180px;
+    --r: 16px;
+
+    --dur: 320ms;
+    --ease: cubic-bezier(.16,1,.3,1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+
+  body {
+    font-family: var(--font);
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3 { line-height: 1.2; letter-spacing: -0.02em; font-weight: 800; }
+  a { color: inherit; text-decoration: none; }
+  ul { list-style: none; }
+  img, svg { display: block; max-width: 100%; }
+
+  .wrap { width: min(100% - 2.6rem, var(--maxw)); margin-inline: auto; }
+
+  .skip {
+    position: absolute; left: -999px; top: 0; z-index: 999;
+    background: var(--navy-900); color: #fff; padding: .8rem 1.2rem; border-radius: 0 0 10px 0;
+  }
+  .skip:focus { left: 0; }
+
+  :focus-visible {
+    outline: 3px solid var(--cyan);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* ───── Header ───── */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(14,26,48,.86);
+    backdrop-filter: saturate(160%) blur(14px);
+    -webkit-backdrop-filter: saturate(160%) blur(14px);
+    border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 70px; color: #fff;
+  }
+  .brand { display: flex; align-items: center; gap: .65rem; font-weight: 800; }
+  .brand .logo {
+    font-size: 1.45rem; letter-spacing: .04em;
+    background: linear-gradient(135deg,#fff 0%, var(--cyan-br) 120%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .brand .logo b { font-weight: 900; color: var(--cyan); -webkit-text-fill-color: var(--cyan); }
+  .brand small { font-size: .72rem; color: #9DB0CC; font-weight: 600; letter-spacing: .02em; }
+  .nav-links { display: flex; align-items: center; gap: 1.9rem; }
+  .nav-links a { font-size: .93rem; font-weight: 600; color: #C9D5E8; transition: color var(--dur); }
+  .nav-links a:hover { color: #fff; }
+  .nav-cta {
+    background: var(--cyan); color: var(--navy-900) !important;
+    padding: .62rem 1.15rem; border-radius: 999px; font-weight: 800 !important;
+    transition: transform var(--dur) var(--ease), box-shadow var(--dur);
+    box-shadow: 0 6px 20px -8px rgba(46,168,224,.7);
+  }
+  .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 26px -8px rgba(46,168,224,.85); }
+  .burger { display: none; background: none; border: 0; color: #fff; padding: .4rem; cursor: pointer; }
+  .burger svg { width: 28px; height: 28px; }
+
+  /* ───── Hero ───── */
+  .hero {
+    position: relative; color: #fff; overflow: hidden;
+    background:
+      radial-gradient(900px 540px at 78% 8%, rgba(46,168,224,.20), transparent 60%),
+      radial-gradient(700px 600px at 5% 95%, rgba(46,168,224,.12), transparent 55%),
+      linear-gradient(180deg, var(--navy-900) 0%, var(--navy-800) 100%);
+  }
+  .hero::before {
+    content: ""; position: absolute; inset: 0; opacity: .35; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
+    background-size: 56px 56px;
+    -webkit-mask-image: radial-gradient(900px 600px at 70% 30%, #000 30%, transparent 80%);
+            mask-image: radial-gradient(900px 600px at 70% 30%, #000 30%, transparent 80%);
+  }
+  .hero-grid {
+    position: relative; display: grid; grid-template-columns: 1.05fr .95fr;
+    gap: 3rem; align-items: center;
+    padding: clamp(3.5rem,2rem+6vw,7rem) 0 clamp(4rem,2rem+6vw,7.5rem);
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: .55rem;
+    font-size: .82rem; font-weight: 700; letter-spacing: .04em;
+    color: var(--cyan-br); background: rgba(46,168,224,.12);
+    border: 1px solid rgba(92,198,242,.32); padding: .42rem .9rem; border-radius: 999px;
+    margin-bottom: 1.5rem;
+  }
+  .eyebrow::before {
+    content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--safe);
+    box-shadow: 0 0 0 0 rgba(40,192,138,.7); animation: ping 2.4s var(--ease) infinite;
+  }
+  @keyframes ping {
+    0% { box-shadow: 0 0 0 0 rgba(40,192,138,.55); }
+    70%,100% { box-shadow: 0 0 0 12px rgba(40,192,138,0); }
+  }
+  .hero h1 { font-size: var(--text-hero); font-weight: 900; }
+  .hero h1 .hl {
+    background: linear-gradient(120deg, var(--cyan-br), #BFE6F8);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero p.lead {
+    margin: 1.5rem 0 2.4rem; font-size: var(--text-lead);
+    color: #C2D0E6; max-width: 33ch;
+  }
+  .hero p.lead b { color: #fff; font-weight: 700; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: .9rem; }
+  .btn {
+    display: inline-flex; align-items: center; gap: .55rem;
+    font-weight: 800; font-size: 1rem; padding: .95rem 1.7rem; border-radius: 999px;
+    transition: transform var(--dur) var(--ease), box-shadow var(--dur), background var(--dur);
+    cursor: pointer; border: 0;
+  }
+  .btn-primary {
+    background: var(--cyan); color: var(--navy-900);
+    box-shadow: 0 14px 34px -12px rgba(46,168,224,.8);
+  }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 20px 40px -12px rgba(46,168,224,.95); }
+  .btn-ghost {
+    background: rgba(255,255,255,.06); color: #fff;
+    border: 1px solid rgba(255,255,255,.22);
+  }
+  .btn-ghost:hover { background: rgba(255,255,255,.13); transform: translateY(-3px); }
+
+  .hero-meta {
+    display: flex; flex-wrap: wrap; gap: 1.6rem 2.4rem; margin-top: 2.8rem;
+    padding-top: 1.8rem; border-top: 1px solid rgba(255,255,255,.1);
+  }
+  .hero-meta div { display: flex; flex-direction: column; }
+  .hero-meta .k { font-size: 1.55rem; font-weight: 900; color: #fff; }
+  .hero-meta .k .u { font-size: .9rem; color: var(--cyan-br); font-weight: 700; }
+  .hero-meta .v { font-size: .82rem; color: #93A4C2; font-weight: 600; }
+
+  .hero-visual { position: relative; }
+  .hero-visual svg { width: 100%; height: auto; filter: drop-shadow(0 30px 50px rgba(0,0,0,.45)); }
+
+  /* ───── Section base ───── */
+  section { padding-block: var(--space-sec); }
+  .sec-head { max-width: 720px; margin-bottom: clamp(2.4rem,1.5rem+2vw,3.6rem); }
+  .tag {
+    display: inline-block; font-size: .8rem; font-weight: 800; letter-spacing: .12em;
+    color: var(--cyan); text-transform: uppercase; margin-bottom: .9rem;
+  }
+  .sec-head h2 { font-size: var(--text-h2); color: var(--ink); }
+  .sec-head p { margin-top: 1rem; font-size: var(--text-lead); color: var(--slate); }
+  .on-dark { background: var(--navy-900); color: #fff; }
+  .on-dark .sec-head h2 { color: #fff; }
+  .on-dark .sec-head p { color: #AEBFD8; }
+  .on-mist { background: var(--mist); }
+
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ───── Why ───── */
+  .why-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.1rem; }
+  .why-card {
+    background: var(--navy-800); border: 1px solid rgba(255,255,255,.07);
+    border-radius: var(--r); padding: 1.8rem 1.5rem; position: relative; overflow: hidden;
+    transition: transform var(--dur) var(--ease), border-color var(--dur);
+  }
+  .why-card:hover { transform: translateY(-6px); border-color: rgba(255,122,26,.5); }
+  .why-card .ic { width: 42px; height: 42px; color: var(--alert); margin-bottom: 1.1rem; }
+  .why-card h3 { font-size: 1.12rem; color: #fff; margin-bottom: .5rem; }
+  .why-card p { font-size: .92rem; color: #9FB0CC; }
+  .why-lead {
+    grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: baseline; gap: .4rem 1rem;
+    margin-bottom: .6rem; font-size: clamp(1.25rem,1rem+1.4vw,2rem); font-weight: 800; color: #fff;
+  }
+  .why-lead em { color: var(--alert); font-style: normal; }
+  .why-lead span { color: var(--cyan-br); }
+
+  /* ───── How it works ───── */
+  .steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.4rem; position: relative; }
+  .step {
+    background: var(--paper); border: 1px solid var(--line); border-radius: var(--r);
+    padding: 2rem 1.7rem; position: relative;
+  }
+  .step .no {
+    font-family: var(--mono); font-size: .85rem; font-weight: 700; color: var(--cyan);
+    border: 1.5px solid var(--cyan); border-radius: 999px; width: 38px; height: 38px;
+    display: grid; place-items: center; margin-bottom: 1.3rem;
+  }
+  .step h3 { font-size: 1.22rem; margin-bottom: .55rem; }
+  .step p { font-size: .95rem; color: var(--slate); }
+  .step .viz { margin-top: 1.5rem; height: 96px; }
+  .step .viz svg { height: 100%; width: auto; margin-inline: auto; }
+
+  /* ───── Features (bento) ───── */
+  .bento { display: grid; grid-template-columns: repeat(6,1fr); gap: 1.1rem; }
+  .feat {
+    background: var(--paper); border: 1px solid var(--line); border-radius: var(--r);
+    padding: 1.9rem; transition: transform var(--dur) var(--ease), box-shadow var(--dur), border-color var(--dur);
+  }
+  .feat:hover { transform: translateY(-6px); box-shadow: 0 22px 44px -24px rgba(27,42,74,.45); border-color: var(--cyan); }
+  .feat.lg { grid-column: span 3; display: grid; grid-template-columns: 1fr auto; gap: 1.5rem; align-items: center; }
+  .feat.sm { grid-column: span 2; }
+  .feat.md { grid-column: span 3; }
+  .feat .ic {
+    width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center;
+    background: rgba(46,168,224,.1); color: var(--cyan); margin-bottom: 1.1rem;
+  }
+  .feat .ic svg { width: 26px; height: 26px; }
+  .feat h3 { font-size: 1.18rem; margin-bottom: .5rem; }
+  .feat p { font-size: .94rem; color: var(--slate); }
+  .feat .big {
+    font-size: clamp(2.4rem,1.6rem+2.6vw,3.6rem); font-weight: 900; color: var(--navy-700);
+    font-family: var(--mono); line-height: 1; white-space: nowrap;
+  }
+  .feat .big small { font-size: .9rem; color: var(--cyan); font-weight: 800; }
+
+  /* ───── Specs ───── */
+  .spec-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 2.4rem 3rem; }
+  .spec-list { border-top: 2px solid var(--navy-700); }
+  .spec-row {
+    display: grid; grid-template-columns: 9rem 1fr; gap: 1rem;
+    padding: .95rem .2rem; border-bottom: 1px solid var(--line);
+  }
+  .spec-row dt { font-weight: 700; color: var(--slate); font-size: .92rem; }
+  .spec-row dd { font-weight: 600; color: var(--ink); font-size: .96rem; }
+  .spec-row dd .mono { font-family: var(--mono); }
+  .model-card {
+    align-self: start; background: var(--navy-900); color: #fff;
+    border-radius: var(--r); padding: 2rem; position: relative; overflow: hidden;
+  }
+  .model-card::after {
+    content: ""; position: absolute; right: -40px; top: -40px; width: 160px; height: 160px;
+    background: radial-gradient(circle, rgba(46,168,224,.4), transparent 70%);
+  }
+  .model-card .lab { font-size: .8rem; letter-spacing: .14em; color: var(--cyan-br); font-weight: 800; }
+  .model-card .num {
+    font-family: var(--mono); font-size: clamp(1.5rem,1rem+2vw,2.3rem); font-weight: 800;
+    margin: .6rem 0 1.4rem; color: #fff; word-break: break-all;
+  }
+  .model-card ul li {
+    display: flex; gap: .65rem; align-items: flex-start; font-size: .92rem; color: #C7D4EA;
+    padding: .42rem 0;
+  }
+  .model-card ul li svg { width: 18px; height: 18px; color: var(--safe); flex: none; margin-top: 3px; }
+
+  /* ───── Applications ───── */
+  .app-block { margin-bottom: 2.6rem; }
+  .app-block:last-child { margin-bottom: 0; }
+  .app-block > h3 {
+    font-size: 1.05rem; color: var(--cyan); display: flex; align-items: center; gap: .7rem;
+    margin-bottom: 1.2rem; letter-spacing: .02em;
+  }
+  .app-block > h3::after { content: ""; flex: 1; height: 1px; background: rgba(255,255,255,.12); }
+  .chips { display: flex; flex-wrap: wrap; gap: .7rem; }
+  .chip {
+    display: inline-flex; align-items: center; gap: .55rem;
+    background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
+    color: #DCE6F5; padding: .7rem 1.15rem; border-radius: 12px; font-weight: 600; font-size: .95rem;
+    transition: transform var(--dur) var(--ease), background var(--dur);
+  }
+  .chip:hover { transform: translateY(-3px); background: rgba(46,168,224,.16); }
+  .chip svg { width: 18px; height: 18px; color: var(--cyan-br); }
+  .chip.danger svg { color: var(--alert); }
+
+  /* ───── Trust ───── */
+  .trust-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 3rem; align-items: center; }
+  .trust-points { display: grid; gap: 1.1rem; }
+  .tp {
+    display: flex; gap: 1.1rem; background: var(--paper); border: 1px solid var(--line);
+    border-radius: var(--r); padding: 1.5rem 1.6rem;
+  }
+  .tp .ic { width: 44px; height: 44px; flex: none; color: var(--cyan); }
+  .tp h3 { font-size: 1.1rem; margin-bottom: .35rem; }
+  .tp p { font-size: .93rem; color: var(--slate); }
+  .cert-card {
+    background: linear-gradient(160deg, var(--navy-700), var(--navy-900));
+    color: #fff; border-radius: 20px; padding: 2.6rem; text-align: center;
+    border: 1px solid rgba(92,198,242,.25);
+  }
+  .cert-card .seal { width: 92px; height: 92px; margin: 0 auto 1.4rem; color: var(--cyan-br); }
+  .cert-card h3 { font-size: 1.35rem; margin-bottom: .6rem; }
+  .cert-card p { color: #B3C4DE; font-size: .95rem; }
+  .cert-card .mk { font-family: var(--mono); margin-top: 1.3rem; color: var(--cyan-br); font-weight: 700; }
+
+  /* ───── Contact CTA ───── */
+  .contact { background: linear-gradient(180deg, var(--navy-800), var(--navy-900)); color: #fff; }
+  .contact-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;
+  }
+  .contact h2 { font-size: var(--text-h2); }
+  .contact h2 .hl { color: var(--cyan-br); }
+  .contact p { color: #B3C4DE; margin: 1.1rem 0 2rem; font-size: var(--text-lead); }
+  .contact-cards { display: grid; gap: .9rem; }
+  .cc {
+    display: flex; align-items: center; gap: 1.1rem;
+    background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
+    border-radius: 14px; padding: 1.15rem 1.4rem;
+    transition: transform var(--dur) var(--ease), background var(--dur), border-color var(--dur);
+  }
+  a.cc:hover { transform: translateX(5px); background: rgba(46,168,224,.16); border-color: var(--cyan); }
+  .cc .ic { width: 40px; height: 40px; flex: none; color: var(--cyan-br); }
+  .cc .l { font-size: .78rem; color: #8FA2C0; font-weight: 700; letter-spacing: .06em; }
+  .cc .d { font-size: 1.12rem; font-weight: 800; color: #fff; }
+  .cc .d.mono { font-family: var(--mono); }
+
+  /* ───── Footer ───── */
+  footer { background: var(--navy-900); color: #8497B5; padding: 2.6rem 0; border-top: 1px solid rgba(255,255,255,.07); }
+  .foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; align-items: center; font-size: .86rem; }
+  .foot .logo { font-weight: 900; color: #fff; font-size: 1.05rem; letter-spacing: .04em; }
+  .foot .logo b { color: var(--cyan); }
+
+  /* ───── Responsive ───── */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .burger { display: block; }
+    .hero-grid { grid-template-columns: 1fr; gap: 2.4rem; }
+    .hero-visual { order: -1; max-width: 460px; }
+    .why-grid { grid-template-columns: repeat(2,1fr); }
+    .steps { grid-template-columns: 1fr; }
+    .bento { grid-template-columns: 1fr; }
+    .feat.lg, .feat.sm, .feat.md { grid-column: 1 / -1; }
+    .spec-wrap, .trust-grid, .contact-inner { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .why-grid { grid-template-columns: 1fr; }
+    .feat.lg { grid-template-columns: 1fr; }
+    .hero-meta { gap: 1.2rem 1.8rem; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">본문 바로가기</a>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#" aria-label="K2FM 홈">
+      <span class="logo">K<b>2</b>FM</span>
+      <small>㈜케이투에프엠</small>
+    </a>
+    <nav class="nav-links" aria-label="주 메뉴">
+      <a href="#why">왜 필요한가</a>
+      <a href="#how">작동 원리</a>
+      <a href="#features">핵심 기능</a>
+      <a href="#specs">상세 사양</a>
+      <a href="#apps">사용처</a>
+      <a class="nav-cta" href="#contact">도입 문의</a>
+    </nav>
+    <button class="burger" aria-label="메뉴 열기" aria-expanded="false" id="burger">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+        <path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ───────── HERO ───────── -->
+<section class="hero" aria-labelledby="hero-h">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">모션감지 음성경고 시스템 · MODEL BSWD92-14-SN</span>
+      <h1 id="hero-h">안전이 가장<br>우선이어야 합니다</h1>
+      <p class="lead">작업자가 위험구역 <b>7m 이내</b>로 접근하면,
+        장치가 <b>스스로 위험을 음성으로 방송</b>합니다.
+        사람은 잊어도 장치는 잊지 않습니다.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#contact">
+          도입 문의하기
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="btn btn-ghost" href="#specs">상세 사양 보기</a>
+      </div>
+      <div class="hero-meta">
+        <div><span class="k">7<span class="u">m</span></span><span class="v">자동 감지 거리</span></div>
+        <div><span class="k">255<span class="u">+ 멘트</span></span><span class="v">MP3 메시지 저장</span></div>
+        <div><span class="k">-30~70<span class="u">℃</span></span><span class="v">동작 온도 범위</span></div>
+      </div>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <!-- 음성경고장치 + 7m 감지존 + 음파 일러스트 (SVG) -->
+      <svg viewBox="0 0 520 440" role="img">
+        <defs>
+          <linearGradient id="box" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#2A3C5E"/><stop offset="1" stop-color="#16243F"/>
+          </linearGradient>
+          <linearGradient id="screen" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#0C141F"/><stop offset="1" stop-color="#13202F"/>
+          </linearGradient>
+          <radialGradient id="zone" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stop-color="#2EA8E0" stop-opacity="0.30"/>
+            <stop offset="1" stop-color="#2EA8E0" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+
+        <!-- 7m 감지 존 -->
+        <ellipse cx="370" cy="320" rx="180" ry="92" fill="url(#zone)"/>
+        <ellipse cx="370" cy="320" rx="180" ry="92" fill="none" stroke="#2EA8E0" stroke-opacity="0.35" stroke-dasharray="4 7"/>
+        <text x="370" y="392" text-anchor="middle" fill="#5CC6F2" font-size="15" font-weight="700" font-family="monospace">감지 반경 7 m</text>
+
+        <!-- 음파 링 (애니메이션) -->
+        <g class="wave" stroke="#5CC6F2" fill="none" stroke-width="3" stroke-linecap="round">
+          <path class="w1" d="M150 150 a60 60 0 0 1 0 96" opacity="0"/>
+          <path class="w2" d="M168 132 a86 86 0 0 1 0 132" opacity="0"/>
+          <path class="w3" d="M186 114 a112 112 0 0 1 0 168" opacity="0"/>
+        </g>
+
+        <!-- 컨트롤 박스 -->
+        <rect x="60" y="120" width="110" height="156" rx="14" fill="url(#box)" stroke="#46618C" stroke-width="1.5"/>
+        <rect x="78" y="138" width="74" height="40" rx="5" fill="url(#screen)" stroke="#1FA8E0" stroke-opacity="0.5"/>
+        <text x="115" y="156" text-anchor="middle" fill="#5CC6F2" font-size="9" font-family="monospace">MESSAGE 10</text>
+        <text x="115" y="170" text-anchor="middle" fill="#7FE0B8" font-size="9" font-family="monospace">DETECT 7m</text>
+        <circle cx="86" cy="200" r="6" fill="#28C08A"/>
+        <circle cx="108" cy="200" r="6" fill="#2EA8E0"/>
+        <circle cx="130" cy="200" r="6" fill="#FF7A1A"/>
+        <rect x="80" y="222" width="70" height="9" rx="4" fill="#2B3F62"/>
+        <rect x="80" y="240" width="48" height="9" rx="4" fill="#2B3F62"/>
+
+        <!-- 스피커 -->
+        <g transform="translate(196 150)">
+          <path d="M0 30 L34 30 L74 0 L74 110 L34 80 L0 80 Z" fill="#22344F" stroke="#46618C" stroke-width="1.5"/>
+          <circle cx="112" cy="55" r="34" fill="none" stroke="#5CC6F2" stroke-width="3" opacity="0.85"/>
+          <circle cx="112" cy="55" r="20" fill="none" stroke="#5CC6F2" stroke-width="3" opacity="0.6"/>
+        </g>
+
+        <!-- 작업자 픽토그램 -->
+        <g transform="translate(338 232)" fill="#9DB4D4">
+          <circle cx="0" cy="-30" r="14"/>
+          <path d="M-12 -10 q12 -8 24 0 l4 44 -10 0 -2 -28 -8 0 -2 28 -10 0 z"/>
+          <rect x="-20" y="-46" width="40" height="9" rx="4" fill="#FF7A1A"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── WHY ───────── -->
+<section id="why" class="on-dark" aria-labelledby="why-h">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="tag">왜 필요한가</span>
+      <h2 id="why-h">위험은 늘 ‘익숙해진 순간’ 발생합니다</h2>
+      <p>제철·석유화학·건설 현장의 중대재해 대부분은 ‘설마’ 하는 순간에 일어납니다.
+         사람의 주의력은 흐려져도, 음성경고장치는 24시간 동일하게 경고합니다.</p>
+    </div>
+    <div class="why-grid">
+      <p class="why-lead reveal">
+        <span>경고판은 읽지 않습니다.</span> 하지만 <em>소리는 반드시 듣게 됩니다.</em>
+      </p>
+      <article class="why-card reveal">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+        <h3>고소·추락 위험</h3>
+        <p>개구부·고소작업 구역 접근 시 즉시 경고로 추락 사고를 차단합니다.</p>
+      </article>
+      <article class="why-card reveal">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-7 7c0 3 2 5 2 8a5 5 0 0 0 10 0c0-3 2-5 2-8a7 7 0 0 0-7-7Z"/><path d="M9 13h.01M15 13h.01"/></svg>
+        <h3>가스 중독 구역</h3>
+        <p>밀폐·유해가스 지역 무단 진입을 음성으로 차단합니다.</p>
+      </article>
+      <article class="why-card reveal">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4M3 10h18M5 6h14a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z"/></svg>
+        <h3>밀폐공간 작업</h3>
+        <p>허가 없는 진입을 실시간 음성 안내로 사전 예방합니다.</p>
+      </article>
+      <article class="why-card reveal">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c4-1 7-5 7-9 0-3-2-5-3-7-1 2-2 3-4 4 0-3-1-5-3-7-1 4-4 6-4 10 0 4 3 8 7 9Z"/></svg>
+        <h3>고열·화기 작업</h3>
+        <p>용단·화기작업 구역의 비작업자 접근을 즉시 경고합니다.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── HOW ───────── -->
+<section id="how" class="on-mist" aria-labelledby="how-h">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="tag">작동 원리</span>
+      <h2 id="how-h">감지부터 경고까지, 단 한 번의 접근으로</h2>
+      <p>별도 조작이 필요 없습니다. 센서가 감지하면 장치가 스스로 판단하고 방송합니다.</p>
+    </div>
+    <div class="steps">
+      <article class="step reveal">
+        <div class="no">01</div>
+        <h3>접근 감지</h3>
+        <p>인체 감지(PIR/레이더) 센서가 위험구역 7m 이내 작업자를 자동 인식합니다.</p>
+        <div class="viz" aria-hidden="true">
+          <svg viewBox="0 0 140 96"><circle cx="40" cy="48" r="10" fill="#2EA8E0"/>
+            <path d="M58 48 a26 26 0 0 1 0 0" /><path d="M60 36 a18 18 0 0 1 0 24" fill="none" stroke="#2EA8E0" stroke-width="3" stroke-linecap="round"/>
+            <path d="M72 28 a30 30 0 0 1 0 40" fill="none" stroke="#2EA8E0" stroke-width="3" stroke-opacity="0.6" stroke-linecap="round"/>
+            <g transform="translate(96 30)" fill="#1B2A4A"><circle cx="0" cy="0" r="8"/><path d="M-7 14 q7 -6 14 0 l3 26 -6 0 -2 -16 -4 0 -2 16 -6 0z"/></g></svg>
+        </div>
+      </article>
+      <article class="step reveal">
+        <div class="no">02</div>
+        <h3>위험 판단</h3>
+        <p>MCU가 검출 간격을 계산해 오작동 없이 경고 트리거를 발생시킵니다.</p>
+        <div class="viz" aria-hidden="true">
+          <svg viewBox="0 0 140 96"><rect x="44" y="26" width="52" height="44" rx="6" fill="#1B2A4A"/>
+            <rect x="52" y="34" width="36" height="14" rx="2" fill="#2EA8E0"/>
+            <circle cx="58" cy="58" r="3.5" fill="#28C08A"/><circle cx="70" cy="58" r="3.5" fill="#5CC6F2"/><circle cx="82" cy="58" r="3.5" fill="#FF7A1A"/>
+            <path d="M70 18 v-8M44 48 h-10M96 48 h10" stroke="#9DB4D4" stroke-width="3" stroke-linecap="round"/></svg>
+        </div>
+      </article>
+      <article class="step reveal">
+        <div class="no">03</div>
+        <h3>음성 방송</h3>
+        <p>50W 스피커 ×2로 현장에 맞는 멘트를 즉시·반복 방송합니다.</p>
+        <div class="viz" aria-hidden="true">
+          <svg viewBox="0 0 140 96"><path d="M40 38 L58 38 L78 24 L78 72 L58 58 L40 58 Z" fill="#1B2A4A"/>
+            <path d="M88 34 a22 22 0 0 1 0 28" fill="none" stroke="#FF7A1A" stroke-width="3.5" stroke-linecap="round"/>
+            <path d="M98 26 a34 34 0 0 1 0 44" fill="none" stroke="#FF7A1A" stroke-width="3.5" stroke-opacity="0.6" stroke-linecap="round"/>
+            <path d="M108 18 a46 46 0 0 1 0 60" fill="none" stroke="#FF7A1A" stroke-width="3.5" stroke-opacity="0.3" stroke-linecap="round"/></svg>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── FEATURES ───────── -->
+<section id="features" aria-labelledby="feat-h">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="tag">핵심 기능</span>
+      <h2 id="feat-h">현장이 요구하는 모든 것을 한 대에</h2>
+      <p>설치는 간단하게, 운용은 자유롭게. 현장 조건에 맞춰 음성·감도·출력을 조정합니다.</p>
+    </div>
+    <div class="bento">
+      <article class="feat lg reveal">
+        <div>
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div>
+          <h3>멘트 자유 변경 · 무제한 커스터마이징</h3>
+          <p>현장·작업·언어에 맞춰 멘트를 직접 제작해 SD카드로 교체. 안내 방송이 곧 현장의 목소리가 됩니다.</p>
+        </div>
+        <div class="big">255<small> MP3</small></div>
+      </article>
+
+      <article class="feat sm reveal">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="9"/></svg></div>
+        <h3>7m 자동 감지</h3>
+        <p>접근하는 순간 작동. 별도 버튼 조작이 필요 없습니다.</p>
+      </article>
+
+      <article class="feat sm reveal">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg></div>
+        <h3>LCD 간편 설정</h3>
+        <p>화면을 보며 음량·감지간격·메시지를 직접 설정합니다.</p>
+      </article>
+
+      <article class="feat sm reveal">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg></div>
+        <h3>듀얼 센서</h3>
+        <p>레이더·확장 인체감지 센서 선택. 현장 환경에 맞게 운용.</p>
+      </article>
+
+      <article class="feat md reveal">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/></svg></div>
+        <h3>광역 전압 · 고출력 앰프 연동</h3>
+        <p>DC 7~32V 폭넓은 입력 + AUX 단자로 외부 앰프 연결. 소음 큰 현장도 충분한 출력으로 커버합니다.</p>
+      </article>
+
+      <article class="feat md reveal">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2v6h6"/><path d="M4 2h10l6 6v14H4Z"/><path d="M8 13h8M8 17h6"/></svg></div>
+        <h3>간편 설치 · 가혹 환경 대응</h3>
+        <p>구조가 단순해 현장에 즉시 설치. -30~+70℃, 습도 5~95%까지 안정 동작합니다.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── SPECS ───────── -->
+<section id="specs" class="on-mist" aria-labelledby="spec-h">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="tag">상세 사양</span>
+      <h2 id="spec-h">제품 사양</h2>
+      <p>모션감지 음성경고장치 — ㈜케이투에프엠 제조 표준 사양입니다.</p>
+    </div>
+    <div class="spec-wrap">
+      <dl class="spec-list reveal">
+        <div class="spec-row"><dt>MCU</dt><dd><span class="mono">ATmega32U4</span> · 5V / 16MHz</dd></div>
+        <div class="spec-row"><dt>센서 포트</dt><dd>기본 1개 · 1개 확장 가능 (주문 시)</dd></div>
+        <div class="spec-row"><dt>저장 매체</dt><dd>TF Card 최대 <span class="mono">32GB</span> · FAT16/FAT32</dd></div>
+        <div class="spec-row"><dt>음성 파일</dt><dd>MP3 · WMV · <span class="mono">001~255</span> 선택 재생</dd></div>
+        <div class="spec-row"><dt>사용 전압</dt><dd><span class="mono">DC 7~32V</span> · AC 220V · DC 12V</dd></div>
+        <div class="spec-row"><dt>스피커</dt><dd>50W 8Ω ×2 · 내장 앰프 + AUX 외부 연동</dd></div>
+        <div class="spec-row"><dt>소비 전력</dt><dd><span class="mono">50mA</span> (대기)</dd></div>
+        <div class="spec-row"><dt>동작 환경</dt><dd>온도 <span class="mono">-30~+70℃</span> · 습도 5~95%</dd></div>
+        <div class="spec-row"><dt>컨트롤 박스</dt><dd><span class="mono">W200 × H300 × D130</span> mm</dd></div>
+      </dl>
+
+      <aside class="model-card reveal">
+        <div class="lab">MODEL NO.</div>
+        <div class="num">BSWD92-14-SN</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>㈜케이투에프엠 직접 제조 · 직접생산확인증명서 보유</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>현장 멘트 직접 제작 — 한국어 음성 합성 지원</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>제품번호 체계로 제작연월·이력 추적 관리</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>현장 조건별 사양 확장 — 상담 시 안내</li>
+        </ul>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── APPLICATIONS ───────── -->
+<section id="apps" class="on-dark" aria-labelledby="app-h">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="tag">사용처</span>
+      <h2 id="app-h">위험이 있는 모든 현장에</h2>
+      <p>산업현장 전반에서, 특히 ‘공사 중 10대 안전철칙’ 준수가 필요한 고위험 구역에 적합합니다.</p>
+    </div>
+
+    <div class="app-block reveal">
+      <h3>산업 현장</h3>
+      <div class="chips">
+        <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20M4 20V8l5 3V8l5 3V8l5 3v9"/></svg>제철 공장</span>
+        <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 22V12h6v10M4 22h16M6 22V8l6-4 6 4v14"/></svg>석유화학 공장</span>
+        <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4v18M13 21V9l6 3v9"/></svg>플랜트·가동 구역</span>
+        <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 3 7h7l-5.5 4 2 7L12 17l-6.5 3 2-7L2 9h7Z"/></svg>건설·공사 현장</span>
+      </div>
+    </div>
+
+    <div class="app-block reveal">
+      <h3>고위험 작업 구역</h3>
+      <div class="chips">
+        <span class="chip danger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>고소·추락 위험지역</span>
+        <span class="chip danger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-7 7c0 3 2 5 2 8a5 5 0 0 0 10 0c0-3 2-5 2-8a7 7 0 0 0-7-7Z"/></svg>가스 중독 지역</span>
+        <span class="chip danger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 3v18"/></svg>밀폐공간 작업</span>
+        <span class="chip danger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c4-1 7-5 7-9 0-3-2-5-3-7-1 2-2 3-4 4 0-3-1-5-3-7-1 4-4 6-4 10 0 4 3 8 7 9Z"/></svg>고열·화기·용단 작업</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── TRUST ───────── -->
+<section id="trust" aria-labelledby="trust-h">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="tag">신뢰</span>
+      <h2 id="trust-h">제조사가 직접 책임집니다</h2>
+      <p>유통이 아닌 직접 제조. 사양 협의부터 멘트 제작, 설치 안내까지 한 곳에서 진행합니다.</p>
+    </div>
+    <div class="trust-grid">
+      <div class="trust-points">
+        <div class="tp reveal">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6Z"/><path d="m9 12 2 2 4-4"/></svg>
+          <div><h3>직접생산확인증명서 보유</h3><p>제조사가 직접 생산·공급하는 제품으로, 공공·기업 납품 시 신뢰 기준을 충족합니다.</p></div>
+        </div>
+        <div class="tp reveal">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-8-8 18-2-7-8-3Z"/></svg>
+          <div><h3>현장 맞춤 멘트 제작</h3><p>위험 내용·작업 종류·현장 언어에 맞춘 안내 멘트를 함께 제작해 드립니다.</p></div>
+        </div>
+        <div class="tp reveal">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M9 15l2 2 4-4"/></svg>
+          <div><h3>설치·운용 지원</h3><p>구조가 단순해 빠른 설치가 가능하며, 도입 상담부터 운용까지 안내합니다.</p></div>
+        </div>
+      </div>
+      <aside class="cert-card reveal">
+        <svg class="seal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="m9 14-2 8 5-3 5 3-2-8"/><path d="m9.5 9 2 2 3-3.5"/></svg>
+        <h3>㈜케이투에프엠 직접 제조</h3>
+        <p>유통 단계를 거치지 않는 제조사 직거래로, 사양 협의·납기·사후 대응이 빠릅니다.</p>
+        <div class="mk">MODEL · BSWD92-14-SN</div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── CONTACT ───────── -->
+<section id="contact" class="contact" aria-labelledby="ct-h">
+  <div class="wrap contact-inner">
+    <div class="reveal">
+      <span class="tag">도입 문의</span>
+      <h2 id="ct-h">현장의 안전,<br><span class="hl">지금 상담받으세요</span></h2>
+      <p>위험구역·작업 환경을 알려주시면 적합한 사양과 멘트 구성을 함께 제안해 드립니다.
+         견적·납기 문의 환영합니다.</p>
+    </div>
+    <div class="contact-cards reveal">
+      <a class="cc" href="tel:01029244847">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .8 2.9a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.2-1.3a2 2 0 0 1 2.1-.4c.9.4 1.9.7 2.9.8a2 2 0 0 1 1.7 2Z"/></svg>
+        <div><div class="l">담당 · 정지원 팀장</div><div class="d mono">010-2924-4847</div></div>
+      </a>
+      <a class="cc" href="tel:0617944459">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h8M10 18h4"/></svg>
+        <div><div class="l">대표 전화 / FAX 061-794-4454</div><div class="d mono">061-794-4459</div></div>
+      </a>
+      <a class="cc" href="mailto:jhk304@naver.com?subject=음성경고장치%20도입%20문의">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+        <div><div class="l">이메일</div><div class="d">jhk304@naver.com</div></div>
+      </a>
+      <div class="cc">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div><div class="l">㈜케이투에프엠</div><div class="d" style="font-size:1rem">전남 광양시 눈소5길 25-4</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span class="logo">K<b>2</b>FM · ㈜케이투에프엠</span>
+    <span>모션감지 음성경고장치 · MODEL BSWD92-14-SN</span>
+    <span>© 2026 K2FM. All rights reserved.</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* 스크롤 등장 애니메이션 */
+  var items = document.querySelectorAll(".reveal");
+  if (reduce || !("IntersectionObserver" in window)) {
+    items.forEach(function (el) { el.classList.add("in"); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+    items.forEach(function (el) { io.observe(el); });
+  }
+
+  /* 음파 링 펄스 (compositor-friendly) */
+  if (!reduce) {
+    var waves = document.querySelectorAll(".hero .wave path");
+    var t = 0;
+    waves.forEach(function (w) {
+      w.animate(
+        [{ opacity: 0, transform: "translateX(-6px)" },
+         { opacity: 0.9, offset: 0.35 },
+         { opacity: 0, transform: "translateX(0)" }],
+        { duration: 2600, delay: t, iterations: Infinity, easing: "cubic-bezier(.16,1,.3,1)" }
+      );
+      t += 520;
+    });
+  }
+
+  /* 모바일 메뉴 (앵커 표시) */
+  var burger = document.getElementById("burger");
+  var links = document.querySelector(".nav-links");
+  if (burger && links) {
+    burger.addEventListener("click", function () {
+      var open = links.style.display === "flex";
+      links.style.cssText = open ? "" :
+        "display:flex;position:absolute;left:0;right:0;top:70px;flex-direction:column;" +
+        "background:#0E1A30;padding:1.2rem 1.3rem;gap:1.1rem;border-bottom:1px solid rgba(255,255,255,.1)";
+      burger.setAttribute("aria-expanded", String(!open));
+    });
+    links.addEventListener("click", function (e) {
+      if (e.target.tagName === "A" && window.innerWidth <= 900) {
+        links.style.cssText = ""; burger.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
+})();
+</script>
+</body>
+</html>
