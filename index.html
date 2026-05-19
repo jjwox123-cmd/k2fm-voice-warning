@@ -210,6 +210,10 @@
 
   .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
   .reveal.in { opacity: 1; transform: none; }
+  /* 앵커 점프 시 sticky 헤더(70px)에 가리지 않도록 보정 */
+  section[id] { scroll-margin-top: 84px; }
+  /* 앵커로 지목된 섹션의 등장요소는 즉시 표시 (애니메이션 미트리거 안전장치) */
+  section:target .reveal { opacity: 1 !important; transform: none !important; }
 
   /* ───── Why ───── */
   .why-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.1rem; }
@@ -849,7 +853,7 @@
       </div>
     </div>
 
-    <div class="reveal">
+    <div class="form-col">
       <form class="inq-form" id="inqForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
         <input type="hidden" name="access_key" value="3a972930-19f0-4937-a436-49c5c0518ab4">
         <input type="hidden" name="subject" value="[K2FM 음성경고장치] 홈페이지 도입 문의">
