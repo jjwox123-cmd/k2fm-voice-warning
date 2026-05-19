@@ -188,7 +188,11 @@
   .hero-meta .v { font-size: .82rem; color: #93A4C2; font-weight: 600; }
 
   .hero-visual { position: relative; }
-  .hero-visual svg { width: 100%; height: auto; filter: drop-shadow(0 30px 50px rgba(0,0,0,.45)); }
+  .hero-visual img {
+    width: 100%; height: auto; display: block; border-radius: 18px;
+    box-shadow: 0 36px 70px -24px rgba(0,0,0,.65);
+    border: 1px solid rgba(255,255,255,.09);
+  }
 
   /* ───── Section base ───── */
   section { padding-block: var(--space-sec); }
@@ -395,6 +399,19 @@
   }
   .price-note { margin-top: 1.7rem; font-size: .9rem; color: var(--slate); text-align: center; }
 
+  /* ───── Product Gallery ───── */
+  .gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem; }
+  .gcard {
+    background: var(--paper); border: 1px solid var(--line); border-radius: 20px;
+    overflow: hidden; transition: transform var(--dur) var(--ease), box-shadow var(--dur);
+  }
+  .gcard:hover { transform: translateY(-6px); box-shadow: 0 26px 50px -26px rgba(27,42,74,.4); }
+  .gcard .gimg { background: #fff; padding: 1.4rem; }
+  .gcard .gimg img { width: 100%; height: auto; display: block; }
+  .gcard figcaption { padding: 1.3rem 1.7rem 1.7rem; border-top: 1px solid var(--line); }
+  .gcard figcaption strong { display: block; font-size: 1.12rem; font-weight: 800; margin-bottom: .3rem; }
+  .gcard figcaption span { font-size: .92rem; color: var(--slate); }
+
   /* ───── Responsive ───── */
   @media (max-width: 900px) {
     .nav-links { display: none; }
@@ -405,7 +422,7 @@
     .steps { grid-template-columns: 1fr; }
     .bento { grid-template-columns: 1fr; }
     .feat.lg, .feat.sm, .feat.md { grid-column: 1 / -1; }
-    .spec-wrap, .trust-grid, .contact-inner, .pricing-grid { grid-template-columns: 1fr; }
+    .spec-wrap, .trust-grid, .contact-inner, .pricing-grid, .gallery-grid { grid-template-columns: 1fr; }
   }
   @media (max-width: 560px) {
     .why-grid { grid-template-columns: 1fr; }
@@ -427,6 +444,7 @@
       <a href="#why">왜 필요한가</a>
       <a href="#how">작동 원리</a>
       <a href="#features">핵심 기능</a>
+      <a href="#gallery">제품 구성</a>
       <a href="#specs">상세 사양</a>
       <a href="#pricing">모델·가격</a>
       <a href="#apps">사용처</a>
@@ -464,59 +482,10 @@
       </div>
     </div>
 
-    <div class="hero-visual" aria-hidden="true">
-      <!-- 음성경고장치 + 7m 감지존 + 음파 일러스트 (SVG) -->
-      <svg viewBox="0 0 520 440" role="img">
-        <defs>
-          <linearGradient id="box" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#2A3C5E"/><stop offset="1" stop-color="#16243F"/>
-          </linearGradient>
-          <linearGradient id="screen" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#0C141F"/><stop offset="1" stop-color="#13202F"/>
-          </linearGradient>
-          <radialGradient id="zone" cx="0.5" cy="0.5" r="0.5">
-            <stop offset="0" stop-color="#2EA8E0" stop-opacity="0.30"/>
-            <stop offset="1" stop-color="#2EA8E0" stop-opacity="0"/>
-          </radialGradient>
-        </defs>
-
-        <!-- 7m 감지 존 -->
-        <ellipse cx="370" cy="320" rx="180" ry="92" fill="url(#zone)"/>
-        <ellipse cx="370" cy="320" rx="180" ry="92" fill="none" stroke="#2EA8E0" stroke-opacity="0.35" stroke-dasharray="4 7"/>
-        <text x="370" y="392" text-anchor="middle" fill="#5CC6F2" font-size="15" font-weight="700" font-family="monospace">감지 반경 7 m</text>
-
-        <!-- 음파 링 (애니메이션) -->
-        <g class="wave" stroke="#5CC6F2" fill="none" stroke-width="3" stroke-linecap="round">
-          <path class="w1" d="M150 150 a60 60 0 0 1 0 96" opacity="0"/>
-          <path class="w2" d="M168 132 a86 86 0 0 1 0 132" opacity="0"/>
-          <path class="w3" d="M186 114 a112 112 0 0 1 0 168" opacity="0"/>
-        </g>
-
-        <!-- 컨트롤 박스 -->
-        <rect x="60" y="120" width="110" height="156" rx="14" fill="url(#box)" stroke="#46618C" stroke-width="1.5"/>
-        <rect x="78" y="138" width="74" height="40" rx="5" fill="url(#screen)" stroke="#1FA8E0" stroke-opacity="0.5"/>
-        <text x="115" y="156" text-anchor="middle" fill="#5CC6F2" font-size="9" font-family="monospace">MESSAGE 10</text>
-        <text x="115" y="170" text-anchor="middle" fill="#7FE0B8" font-size="9" font-family="monospace">DETECT 7m</text>
-        <circle cx="86" cy="200" r="6" fill="#28C08A"/>
-        <circle cx="108" cy="200" r="6" fill="#2EA8E0"/>
-        <circle cx="130" cy="200" r="6" fill="#FF7A1A"/>
-        <rect x="80" y="222" width="70" height="9" rx="4" fill="#2B3F62"/>
-        <rect x="80" y="240" width="48" height="9" rx="4" fill="#2B3F62"/>
-
-        <!-- 스피커 -->
-        <g transform="translate(196 150)">
-          <path d="M0 30 L34 30 L74 0 L74 110 L34 80 L0 80 Z" fill="#22344F" stroke="#46618C" stroke-width="1.5"/>
-          <circle cx="112" cy="55" r="34" fill="none" stroke="#5CC6F2" stroke-width="3" opacity="0.85"/>
-          <circle cx="112" cy="55" r="20" fill="none" stroke="#5CC6F2" stroke-width="3" opacity="0.6"/>
-        </g>
-
-        <!-- 작업자 픽토그램 -->
-        <g transform="translate(338 232)" fill="#9DB4D4">
-          <circle cx="0" cy="-30" r="14"/>
-          <path d="M-12 -10 q12 -8 24 0 l4 44 -10 0 -2 -28 -8 0 -2 28 -10 0 z"/>
-          <rect x="-20" y="-46" width="40" height="9" rx="4" fill="#FF7A1A"/>
-        </g>
-      </svg>
+    <div class="hero-visual">
+      <img src="assets/hero.jpg" width="956" height="1280"
+           alt="K2FM 음성경고장치 실물 — 고출력 혼 스피커 2개와 SAFETY WARNING DEVICE 컨트롤 박스"
+           fetchpriority="high" decoding="async">
     </div>
   </div>
 </section>
@@ -651,6 +620,27 @@
         <h3>간편 설치 · 가혹 환경 대응</h3>
         <p>구조가 단순해 현장에 즉시 설치. -30~+70℃, 습도 5~95%까지 안정 동작합니다.</p>
       </article>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── PRODUCT GALLERY ───────── -->
+<section id="gallery" class="on-mist" aria-labelledby="gal-h">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="tag">제품 구성</span>
+      <h2 id="gal-h">실물 그대로의 구성품</h2>
+      <p>컨트롤 박스 1대 + 고출력 혼 스피커 2개 + 전원 케이블로 구성됩니다. 별도 가공 없이 현장에 바로 설치합니다.</p>
+    </div>
+    <div class="gallery-grid">
+      <figure class="gcard reveal">
+        <div class="gimg"><img src="assets/body.jpg" width="1280" height="956" loading="lazy" decoding="async" alt="음성경고장치 컨트롤 박스 실물 — 흰색 함체, 적·황 전면 패널, LCD 창, 전원 케이블 일체형"></div>
+        <figcaption><strong>컨트롤 박스</strong><span>LCD 설정부 · MP3 모듈 · 정전압 회로 · 전원 케이블 일체형</span></figcaption>
+      </figure>
+      <figure class="gcard reveal">
+        <div class="gimg"><img src="assets/speaker.jpg" width="1280" height="956" loading="lazy" decoding="async" alt="고출력 혼 스피커 2개 실물 — 광역 음성 전달용 혼 타입"></div>
+        <figcaption><strong>고출력 혼 스피커 ×2</strong><span>광역 음성 전달용 혼 타입 · 고출력 모델 기준 50W 8Ω</span></figcaption>
+      </figure>
     </div>
   </div>
 </section>
